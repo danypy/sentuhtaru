@@ -1,6 +1,6 @@
 # sentuhtaru
 
-Sentuh Taru Apps
+Sentuh Taru Apps - APK
 
 ## Getting Started
 
