@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 8,
                           ),
                           Text(
-                            'Alamat',
+                            'ALAMAT',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.white.withAlpha(255),
@@ -161,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 8,
                           ),
                           Text(
-                            'Telepon',
+                            'TELEPON',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.white.withAlpha(255),
@@ -194,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 8,
                           ),
                           Text(
-                            'Email',
+                            'EMAIL',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.white.withAlpha(255),

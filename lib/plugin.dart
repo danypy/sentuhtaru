@@ -68,7 +68,7 @@ class Buildbottommenu extends StatelessWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => const Kontak(),
+              builder: (BuildContext context) => const Profil(),
             ),
           );
         }

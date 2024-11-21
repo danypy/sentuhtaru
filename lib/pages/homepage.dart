@@ -193,6 +193,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         textScaler: TextScaler.linear(1.0),
                       ),
+                      Container(
+                        height: 8,
+                      ),
                       YoutubePlayer(
                         controller: videoControl,
                         showVideoProgressIndicator: true,
