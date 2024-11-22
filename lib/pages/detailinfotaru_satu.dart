@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sentuhtaru/plugin.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class DetailInfoTaruSatu extends StatelessWidget {
   const DetailInfoTaruSatu({super.key});
@@ -22,26 +22,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey webViewKey = GlobalKey();
-  InAppWebViewController? webViewController;
-
-  InAppWebViewSettings settings = InAppWebViewSettings(
-      javaScriptEnabled: true,
-      javaScriptCanOpenWindowsAutomatically: true,
-      cacheEnabled: true,
-      isInspectable: false,
-      mediaPlaybackRequiresUserGesture: false,
-      allowsInlineMediaPlayback: true,
-      iframeAllow: "camera; microphone",
-      textZoom: 270,
-      transparentBackground: true,
-      iframeAllowFullscreen: true);
-
-  PullToRefreshController? pullToRefreshController;
-  String url = "";
-  double progress = 0;
-  final urlController = TextEditingController();
-
   String zjudul = '';
   String zgambar = '';
   String zisi = '';
@@ -49,15 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-
-    pullToRefreshController = PullToRefreshController(
-      settings: PullToRefreshSettings(
-        color: Colors.blue,
-      ),
-      onRefresh: () async {
-        webViewController?.reload();
-      },
-    );
 
     loadData();
   }
@@ -182,15 +153,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       Container(
                         height: 8,
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height - 250,
-                        child: Stack(
-                          children: <Widget>[
-                            InAppWebView(
-                              initialData: InAppWebViewInitialData(data: 'https://sukaphp.com'),
-                              initialSettings: settings,
-                            ),
-                          ],
+                      HtmlWidget(
+                        zisi,
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
                         ),
                       ),
                       Container(

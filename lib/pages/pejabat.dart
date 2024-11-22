@@ -179,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: Text(
                                       kabidNama.toString(),
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                       ),

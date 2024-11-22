@@ -5,6 +5,7 @@ import 'bukalayanan.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class DetailAplikasi extends StatelessWidget {
   final int myId;
@@ -231,67 +232,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       Container(
                         height: 8,
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height - 250,
-                        child: Stack(
-                          children: <Widget>[
-                            InAppWebView(
-                              key: webViewKey,
-                              initialData: InAppWebViewInitialData(
-                                data: '$xdeskripsi<style>* {  color: #FFFFFF; }</style>',
-                              ),
-                              initialSettings: settings,
-                              pullToRefreshController: pullToRefreshController,
-                              onWebViewCreated: (controller) {
-                                webViewController = controller;
-                              },
-                              onLoadStart: (controller, url) {
-                                setState(() {
-                                  this.url = url.toString();
-                                  urlController.text = this.url;
-                                });
-                              },
-                              onPermissionRequest: (controller, request) async {
-                                return PermissionResponse(
-                                    resources: request.resources,
-                                    action: PermissionResponseAction.GRANT);
-                              },
-                              shouldOverrideUrlLoading:
-                                  (controller, navigationAction) async {
-                                return NavigationActionPolicy.ALLOW;
-                              },
-                              onLoadStop: (controller, url) async {
-                                pullToRefreshController?.endRefreshing();
-                                setState(() {
-                                  this.url = url.toString();
-                                  urlController.text = this.url;
-                                });
-                              },
-                              onReceivedError: (controller, request, error) {
-                                pullToRefreshController?.endRefreshing();
-                              },
-                              onProgressChanged: (controller, progress) {
-                                if (progress == 100) {
-                                  pullToRefreshController?.endRefreshing();
-                                }
-                                setState(() {
-                                  this.progress = progress / 100;
-                                  urlController.text = url;
-                                });
-                              },
-                              onUpdateVisitedHistory: (controller, url, androidIsReload) {
-                                setState(() {
-                                  this.url = url.toString();
-                                  urlController.text = this.url;
-                                });
-                              },
-                              onConsoleMessage: (controller, consoleMessage) {
-                              },
-                            ),
-                            progress < 1.0
-                                ? LinearProgressIndicator(value: progress)
-                                : Container(),
-                          ],
+                      HtmlWidget(
+                        xdeskripsi,
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
                         ),
                       ),
                       Container(
