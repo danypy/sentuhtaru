@@ -32,12 +32,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> listJudulVideo = <String>[];
   List<String> listVideo = <String>[];
-  PageController pcVideo = PageController(viewportFraction: 0.4, initialPage: 0);
+  PageController pcVideo =
+      PageController(viewportFraction: 0.4, initialPage: 0);
 
   List<int> listIdAgenda = <int>[];
   List<String> listJudulAgenda = <String>[];
   List<String> listAgenda = <String>[];
-  PageController pcAgenda = PageController(viewportFraction: 1.0, initialPage: 0);
+  PageController pcAgenda =
+      PageController(viewportFraction: 1.0, initialPage: 0);
 
   List<int> listIdApps = <int>[];
   List<String> listApps = <String>[];
@@ -45,7 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
   List<int> listIdBerita = <int>[];
   List<String> listJudulBerita = <String>[];
   List<String> listIsiBerita = <String>[];
-  PageController pcBerita = PageController(viewportFraction: 1.0, initialPage: 0);
+  PageController pcBerita =
+      PageController(viewportFraction: 1.0, initialPage: 0);
 
   YoutubePlayerController videoControl = YoutubePlayerController(
     initialVideoId: '7dT7fkDMbdQ',
@@ -66,7 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void loadData() async {
     // videos
-    String tmp = await http.read(Uri.parse('https://simtaru.kaltimprov.go.id/api/videos?limit=5'));
+    String tmp = await http
+        .read(Uri.parse('https://simtaru.kaltimprov.go.id/api/videos?limit=5'));
     List<dynamic> tmpData = jsonDecode(tmp).toList();
     setState(() {
       for (var element in tmpData) {
@@ -77,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     // aplikasi
-    String tmpapp = await http.read(Uri.parse('https://simtaru.kaltimprov.go.id/api/aplikasi?limit=3'));
+    String tmpapp = await http.read(
+        Uri.parse('https://simtaru.kaltimprov.go.id/api/aplikasi?limit=3'));
     List<dynamic> tmpDataapp = jsonDecode(tmpapp).toList();
     setState(() {
       for (var element in tmpDataapp) {
@@ -87,7 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     // agendas
-    String tmpa = await http.read(Uri.parse('https://simtaru.kaltimprov.go.id/api/events?limit=3'));
+    String tmpa = await http
+        .read(Uri.parse('https://simtaru.kaltimprov.go.id/api/events?limit=3'));
     List<dynamic> tmpDataa = jsonDecode(tmpa).toList();
     setState(() {
       for (var element in tmpDataa) {
@@ -98,7 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     // beritas
-    String tmpb = await http.read(Uri.parse('https://simtaru.kaltimprov.go.id/api/posts?limit=3'));
+    String tmpb = await http
+        .read(Uri.parse('https://simtaru.kaltimprov.go.id/api/posts?limit=3'));
     List<dynamic> tmpDatab = jsonDecode(tmpb).toList();
     setState(() {
       for (var element in tmpDatab) {
@@ -127,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: false,
-      builder: (_ , child) {
+      builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
@@ -170,11 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 shape: const Border(
-                    bottom: BorderSide(
-                        color: Colors.white30,
-                        width: 1
-                    )
-                ),
+                    bottom: BorderSide(color: Colors.white30, width: 1)),
                 elevation: 4,
               ),
               body: SingleChildScrollView(
@@ -196,41 +199,56 @@ class _MyHomePageState extends State<MyHomePage> {
                       Container(
                         height: 8,
                       ),
-                      YoutubePlayer(
-                        controller: videoControl,
-                        showVideoProgressIndicator: true,
-                        progressIndicatorColor: Colors.blueAccent,
-                        onEnded: (metaData) {
-                          setState(() {
-                            videoControl.load(listVideo[
-                            (listVideo.indexOf(metaData.videoId) + 1) %
-                                listVideo.length]);
-                            _currentPos1 =
-                                listVideo.indexOf(metaData.videoId) + 1;
-                            pcVideo.animateToPage(
-                              _currentPos1,
-                              duration: const Duration(milliseconds: 400),
-                              curve: Curves.easeIn,
-                            );
-                          });
-                        },
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(0),
-                        padding: const EdgeInsets.all(0),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withAlpha(200),
-                        ),
-                        child: Center(
-                          child: Text(
-                            listJudulVideo.isEmpty
-                                ? ''
-                                : (listJudulVideo[_currentPos1]),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black.withAlpha(255),
+                      ClipRRect(
+                        clipBehavior: Clip.antiAlias,
+                        borderRadius: BorderRadius.circular(4),
+                        child: Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: EdgeInsets.all(3),
+                            child: Column(
+                              children: [
+                                YoutubePlayer(
+                                  controller: videoControl,
+                                  showVideoProgressIndicator: true,
+                                  progressIndicatorColor: Colors.blueAccent,
+                                  onEnded: (metaData) {
+                                    setState(() {
+                                      videoControl.load(listVideo[
+                                      (listVideo.indexOf(metaData.videoId) +
+                                          1) %
+                                          listVideo.length]);
+                                      _currentPos1 =
+                                          listVideo.indexOf(metaData.videoId) + 1;
+                                      pcVideo.animateToPage(
+                                        _currentPos1,
+                                        duration: const Duration(milliseconds: 400),
+                                        curve: Curves.easeIn,
+                                      );
+                                    });
+                                  },
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.all(0),
+                                  padding: const EdgeInsets.all(0),
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withAlpha(200),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      listJudulVideo.isEmpty
+                                          ? ''
+                                          : (listJudulVideo[_currentPos1]),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black.withAlpha(255),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -252,13 +270,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             });
                           },
                           itemBuilder: (context, index) {
-                            String tmpx = 'https://img.youtube.com/vi/${listVideo[index]}/sddefault.jpg';
+                            String tmpx =
+                                'https://img.youtube.com/vi/${listVideo[index]}/sddefault.jpg';
                             return GestureDetector(
                               onTap: () {
                                 videoControl.load(listVideo[index]);
                               },
                               child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(8),
@@ -285,7 +305,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: <Widget>[
                           ...List.generate(
                             listVideo.isEmpty ? 0 : listVideo.length,
-                                (index) => Indicator(
+                            (index) => Indicator(
                               isActive: _currentPos1 == index ? true : false,
                             ),
                           ),
@@ -311,7 +331,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute<void>(
-                                  builder: (BuildContext context) => const Aplikasi(),
+                                  builder: (BuildContext context) =>
+                                      const Aplikasi(),
                                 ),
                               );
                             },
@@ -332,20 +353,29 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             ...List.generate(
                               listApps.isEmpty ? 0 : listApps.length,
-                                  (index) => Padding(
+                              (index) => Padding(
                                 padding: const EdgeInsets.all(4),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute<void>(
-                                        builder: (BuildContext context) => DetailAplikasi(myId: listIdApps[index],),
+                                        builder: (BuildContext context) =>
+                                            DetailAplikasi(
+                                          myId: listIdApps[index],
+                                        ),
                                       ),
                                     );
                                   },
                                   child: Container(
-                                    width: (MediaQuery.of(context).size.width - 60) / 3,
-                                    height: ((MediaQuery.of(context).size.width - 60) * (9 / 16)) / 3,
+                                    width: (MediaQuery.of(context).size.width -
+                                            60) /
+                                        3,
+                                    height:
+                                        ((MediaQuery.of(context).size.width -
+                                                    60) *
+                                                (9 / 16)) /
+                                            3,
                                     decoration: BoxDecoration(
                                       color: Colors.white.withAlpha(255),
                                       borderRadius: const BorderRadius.all(
@@ -383,12 +413,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width - 32,
-                        height: (MediaQuery.of(context).size.width - 32) * (9 / 16),
-                        decoration: const BoxDecoration(
-                        ),
+                        height:
+                            (MediaQuery.of(context).size.width - 32) * (9 / 16),
+                        decoration: const BoxDecoration(),
                         child: PageView.builder(
                           controller: pcAgenda,
-                          itemCount: listJudulAgenda.isEmpty ? 0 : listJudulAgenda.length,
+                          itemCount: listJudulAgenda.isEmpty
+                              ? 0
+                              : listJudulAgenda.length,
                           onPageChanged: (value) {
                             setState(() {
                               _currentPos2 = value;
@@ -400,7 +432,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute<void>(
-                                    builder: (BuildContext context) => DetailAgenda(myId: listIdAgenda[index],),
+                                    builder: (BuildContext context) =>
+                                        DetailAgenda(
+                                      myId: listIdAgenda[index],
+                                    ),
                                   ),
                                 );
                               },
@@ -408,8 +443,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Positioned(
                                     child: Container(
-                                      width: MediaQuery.of(context).size.width - 32,
-                                      height: (MediaQuery.of(context).size.width - 32) * (9 / 16),
+                                      width: MediaQuery.of(context).size.width -
+                                          32,
+                                      height:
+                                          (MediaQuery.of(context).size.width -
+                                                  32) *
+                                              (9 / 16),
                                       decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(8),
@@ -420,9 +459,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                         padding: const EdgeInsets.all(1),
                                         child: ClipRRect(
                                           clipBehavior: Clip.antiAlias,
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           child: Image.network(
-                                            listAgenda[index].toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${listAgenda[index].toString()}',
+                                            listAgenda[index].toString() == ''
+                                                ? 'https://sukaphp.com/assets/noimage.png'
+                                                : 'https://simtaru.kaltimprov.go.id/storage/${listAgenda[index].toString()}',
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -434,7 +476,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: Container(
                                       margin: const EdgeInsets.all(8),
                                       padding: const EdgeInsets.all(8),
-                                      width: MediaQuery.of(context).size.width - 48,
+                                      width: MediaQuery.of(context).size.width -
+                                          48,
                                       decoration: BoxDecoration(
                                         color: Colors.white.withAlpha(200),
                                         borderRadius: BorderRadius.circular(8),
@@ -466,8 +509,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           ...List.generate(
-                            listJudulAgenda.isEmpty ? 0 : listJudulAgenda.length,
-                                (index) => Indicator2(
+                            listJudulAgenda.isEmpty
+                                ? 0
+                                : listJudulAgenda.length,
+                            (index) => Indicator2(
                               isActive2: _currentPos2 == index ? true : false,
                             ),
                           ),
@@ -490,12 +535,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width - 32,
-                        height: (MediaQuery.of(context).size.width - 32) * (9 / 16),
-                        decoration: const BoxDecoration(
-                        ),
+                        height:
+                            (MediaQuery.of(context).size.width - 32) * (9 / 16),
+                        decoration: const BoxDecoration(),
                         child: PageView.builder(
                           controller: pcBerita,
-                          itemCount: listJudulBerita.isEmpty ? 0 : listJudulBerita.length,
+                          itemCount: listJudulBerita.isEmpty
+                              ? 0
+                              : listJudulBerita.length,
                           onPageChanged: (value) {
                             setState(() {
                               _currentPos3 = value;
@@ -507,7 +554,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute<void>(
-                                    builder: (BuildContext context) => DetailBerita(myId: listIdBerita[index],),
+                                    builder: (BuildContext context) =>
+                                        DetailBerita(
+                                      myId: listIdBerita[index],
+                                    ),
                                   ),
                                 );
                               },
@@ -515,8 +565,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Positioned(
                                     child: Container(
-                                      width: MediaQuery.of(context).size.width - 32,
-                                      height: (MediaQuery.of(context).size.width - 32) * (9 / 16),
+                                      width: MediaQuery.of(context).size.width -
+                                          32,
+                                      height:
+                                          (MediaQuery.of(context).size.width -
+                                                  32) *
+                                              (9 / 16),
                                       decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(8),
@@ -527,9 +581,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                         padding: const EdgeInsets.all(1),
                                         child: ClipRRect(
                                           clipBehavior: Clip.antiAlias,
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           child: Image.network(
-                                            listIsiBerita[index].toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${listIsiBerita[index].toString()}',
+                                            listIsiBerita[index].toString() ==
+                                                    ''
+                                                ? 'https://sukaphp.com/assets/noimage.png'
+                                                : 'https://simtaru.kaltimprov.go.id/storage/${listIsiBerita[index].toString()}',
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -541,7 +599,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: Container(
                                       margin: const EdgeInsets.all(8),
                                       padding: const EdgeInsets.all(8),
-                                      width: MediaQuery.of(context).size.width - 48,
+                                      width: MediaQuery.of(context).size.width -
+                                          48,
                                       decoration: BoxDecoration(
                                         color: Colors.white.withAlpha(200),
                                         borderRadius: BorderRadius.circular(8),
@@ -573,8 +632,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           ...List.generate(
-                            listJudulBerita.isEmpty ? 0 : listJudulBerita.length,
-                                (index) => Indicator3(
+                            listJudulBerita.isEmpty
+                                ? 0
+                                : listJudulBerita.length,
+                            (index) => Indicator3(
                               isActive3: _currentPos3 == index ? true : false,
                             ),
                           ),

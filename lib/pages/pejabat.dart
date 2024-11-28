@@ -161,47 +161,57 @@ class _MyHomePageState extends State<MyHomePage> {
                       Center(
                         child: Wrap(
                           children: [
-                            Column(
-                              children: [
-                                Container(
-                                  width: 110,
-                                  height: 145,
-                                  color: Colors.white,
-                                  child: Image.network(
-                                    kabidGambar.toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${kabidGambar.toString()}',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Container(
-                                  color: Colors.white,
-                                  width: 110,
-                                  child: Center(
-                                    child: Text(
-                                      kabidNama.toString(),
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
+                            ClipRRect(
+                              clipBehavior: Clip.antiAlias,
+                              borderRadius: BorderRadius.circular(4),
+                              child: Container(
+                                color: Colors.white,
+                                child: Padding(
+                                  padding: EdgeInsets.all(3),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 170,
+                                        height: 220,
+                                        color: Colors.white,
+                                        child: Image.network(
+                                          kabidGambar.toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${kabidGambar.toString()}',
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
-                                      textScaler: TextScaler.linear(1.0),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  color: Colors.white,
-                                  width: 110,
-                                  child: Center(
-                                    child: Text(
-                                      kabidNip.toString(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 10,
+                                      Container(
+                                        color: Colors.white,
+                                        width: 170,
+                                        child: Center(
+                                          child: Text(
+                                            kabidNama.toString(),
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textScaler: const TextScaler.linear(1.0),
+                                          ),
+                                        ),
                                       ),
-                                      textScaler: TextScaler.linear(1.0),
-                                    ),
+                                      Container(
+                                        color: Colors.white,
+                                        width: 170,
+                                        child: Center(
+                                          child: Text(
+                                            kabidNip.toString(),
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                            ),
+                                            textScaler: const TextScaler.linear(1.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             )
                           ],
                         ),
@@ -216,49 +226,59 @@ class _MyHomePageState extends State<MyHomePage> {
                               kasiNama.isEmpty ? 0 : kasiNama.length,
                                   (index) => Padding(
                                 padding: const EdgeInsets.all(4),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 110,
-                                      height: 145,
-                                      color: Colors.white,
-                                      child: Image.network(
-                                        kasiGambar[index].toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${kasiGambar[index].toString()}',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    Container(
-                                      color: Colors.white,
-                                      width: 110,
-                                      height: 50,
-                                      child: Center(
-                                        child: Text(
-                                          kasiNama[index].toString(),
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
+                                child: ClipRRect(
+                                  clipBehavior: Clip.antiAlias,
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(3),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 170,
+                                            height: 220,
+                                            color: Colors.white,
+                                            child: Image.network(
+                                              kasiGambar[index].toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${kasiGambar[index].toString()}',
+                                              fit: BoxFit.fill,
+                                            ),
                                           ),
-                                          textScaler: TextScaler.linear(1.0),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      color: Colors.white,
-                                      width: 110,
-                                      height: 50,
-                                      child: Center(
-                                        child: Text(
-                                          kasiNip[index].toString(),
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 10,
+                                          Container(
+                                            color: Colors.white,
+                                            width: 170,
+                                            height: 50,
+                                            child: Center(
+                                              child: Text(
+                                                kasiNama[index].toString(),
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                textScaler: const TextScaler.linear(1.0),
+                                              ),
+                                            ),
                                           ),
-                                          textScaler: TextScaler.linear(1.0),
-                                        ),
+                                          Container(
+                                            color: Colors.white,
+                                            width: 170,
+                                            height: 50,
+                                            child: Center(
+                                              child: Text(
+                                                kasiNip[index].toString(),
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                ),
+                                                textScaler: const TextScaler.linear(1.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -275,49 +295,59 @@ class _MyHomePageState extends State<MyHomePage> {
                               stafNama.isEmpty ? 0 : stafNama.length,
                                   (index) => Padding(
                                 padding: const EdgeInsets.all(4),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 110,
-                                      height: 145,
-                                      color: Colors.white,
-                                      child: Image.network(
-                                        stafGambar[index].toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${stafGambar[index].toString()}',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    Container(
-                                      color: Colors.white,
-                                      width: 110,
-                                      height: 50,
-                                      child: Center(
-                                        child: Text(
-                                          stafNama[index].toString(),
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
+                                child: ClipRRect(
+                                  clipBehavior: Clip.antiAlias,
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(3),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 170,
+                                            height: 220,
+                                            color: Colors.white,
+                                            child: Image.network(
+                                              stafGambar[index].toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${stafGambar[index].toString()}',
+                                              fit: BoxFit.fill,
+                                            ),
                                           ),
-                                          textScaler: TextScaler.linear(1.0),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      color: Colors.white,
-                                      width: 110,
-                                      height: 50,
-                                      child: Center(
-                                        child: Text(
-                                          stafNip[index].toString(),
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 10,
+                                          Container(
+                                            color: Colors.white,
+                                            width: 170,
+                                            height: 50,
+                                            child: Center(
+                                              child: Text(
+                                                stafNama[index].toString(),
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                textScaler: const TextScaler.linear(1.0),
+                                              ),
+                                            ),
                                           ),
-                                          textScaler: TextScaler.linear(1.0),
-                                        ),
+                                          Container(
+                                            color: Colors.white,
+                                            width: 170,
+                                            height: 50,
+                                            child: Center(
+                                              child: Text(
+                                                stafNip[index].toString(),
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                ),
+                                                textScaler: const TextScaler.linear(1.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
