@@ -22,6 +22,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // data
   List<int> listIdApps = <int>[];
   List<String> listJudulApps = <String>[];
   List<String> listApps = <String>[];
