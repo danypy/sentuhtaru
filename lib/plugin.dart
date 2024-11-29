@@ -131,7 +131,13 @@ navigasiBawah(BuildContext context) {
       if(index==3){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Homepage()),
+          MaterialPageRoute(builder: (context) => const Layanan()),
+        );
+      }
+      if(index==4){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Layanan()),
         );
       }
     },
