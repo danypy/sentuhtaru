@@ -1,29 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sentuhtaru/plugin.dart';
+import 'package:sentuhtaru/pages/infotaru.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class DetailInfoTaruDua extends StatelessWidget {
-  final String myTitle;
-  final String myUrl;
-  const DetailInfoTaruDua({super.key, required this.myTitle, required this.myUrl});
+class DetailInfoTaruDua extends StatefulWidget {
+  const DetailInfoTaruDua({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MyHomePage(myTitle: myTitle, myUrl: myUrl,);
-  }
+  State<DetailInfoTaruDua> createState() => _DetailInfoTaruDua();
 }
 
-class MyHomePage extends StatefulWidget {
-  final String myTitle;
-  final String myUrl;
-  const MyHomePage({super.key, required this.myTitle, required this.myUrl});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _DetailInfoTaruDua extends State<DetailInfoTaruDua> {
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;
 
@@ -42,14 +29,11 @@ class _MyHomePageState extends State<MyHomePage> {
   double progress = 0;
   final urlController = TextEditingController();
 
-  String zjudul = '';
-  String zgambar = '';
-  String zisi = '';
-
   @override
   void initState() {
     super.initState();
 
+    loadData();
     pullToRefreshController = PullToRefreshController(
       settings: PullToRefreshSettings(
         color: Colors.blue,
@@ -58,8 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
         webViewController?.reload();
       },
     );
-
-    loadData();
   }
 
   void loadData() async {
@@ -77,125 +59,94 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: false,
-      builder: (_ , child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            fontFamily: 'FontPoppins',
-          ),
-          home: SafeArea(
-            child: Scaffold(
-              backgroundColor: const Color(0xFF053400),
-              appBar: AppBar(
-                title: const Text(
-                  'SENTUH TARU',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textScaler: TextScaler.linear(1.0),
-                ),
-                actions: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 16.0),
-                    child: Image(
-                      image: AssetImage('assets/images/kaltim.png'),
-                      width: 32,
-                    ),
-                  ),
-                ],
-                backgroundColor: const Color(0xFF053400),
-                leading: Builder(
-                  builder: (context) {
-                    return IconButton(
-                      icon: const Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    );
-                  },
-                ),
-                shape: const Border(
-                    bottom: BorderSide(
-                        color: Colors.white30,
-                        width: 1
-                    )
-                ),
-                elevation: 4,
+    return halaman(
+      context,
+      Stack(
+        children: <Widget>[
+          TextButton(
+            style: TextButton.styleFrom(
+              minimumSize: const Size.fromHeight(30),
+              backgroundColor: Colors.white,
+              alignment: Alignment.centerLeft,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.zero),
               ),
-              body: Stack(
-                children: <Widget>[
-                  InAppWebView(
-                    key: webViewKey,
-                    initialUrlRequest:
-                    URLRequest(url: WebUri(widget.myUrl.toString())),
-                    initialSettings: settings,
-                    pullToRefreshController: pullToRefreshController,
-                    onWebViewCreated: (controller) {
-                      webViewController = controller;
-                    },
-                    onLoadStart: (controller, url) {
-                      setState(() {
-                        this.url = url.toString();
-                        urlController.text = this.url;
-                      });
-                    },
-                    onPermissionRequest: (controller, request) async {
-                      return PermissionResponse(
-                          resources: request.resources,
-                          action: PermissionResponseAction.GRANT);
-                    },
-                    shouldOverrideUrlLoading:
-                        (controller, navigationAction) async {
-                      return NavigationActionPolicy.ALLOW;
-                    },
-                    onLoadStop: (controller, url) async {
-                      pullToRefreshController?.endRefreshing();
-                      setState(() {
-                        this.url = url.toString();
-                        urlController.text = this.url;
-                      });
-                    },
-                    onReceivedError: (controller, request, error) {
-                      pullToRefreshController?.endRefreshing();
-                    },
-                    onProgressChanged: (controller, progress) {
-                      if (progress == 100) {
-                        pullToRefreshController?.endRefreshing();
-                      }
-                      setState(() {
-                        this.progress = progress / 100;
-                        urlController.text = url;
-                      });
-                    },
-                    onUpdateVisitedHistory: (controller, url, androidIsReload) {
-                      setState(() {
-                        this.url = url.toString();
-                        urlController.text = this.url;
-                      });
-                    },
-                    onConsoleMessage: (controller, consoleMessage) {
-                    },
-                  ),
-                  progress < 1.0
-                      ? LinearProgressIndicator(value: progress)
-                      : Container(),
-                ],
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Infotaru()),
+              );
+            },
+            child: const Text(
+              '< Info Taru',
+              style: TextStyle(
+                fontSize: 12,
+                color: Color(0xFF053400),
               ),
-              bottomNavigationBar: const Buildbottommenu(),
-              drawer: BuildDrawer(ctx: context),
             ),
           ),
-        );
-      },
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+            child: InAppWebView(
+              key: webViewKey,
+              initialUrlRequest:
+              URLRequest(url: WebUri('https://sniper-kaliber.kaltimprov.go.id/cek-status-permohonan')),
+              initialSettings: settings,
+              pullToRefreshController: pullToRefreshController,
+              onWebViewCreated: (controller) {
+                webViewController = controller;
+              },
+              onLoadStart: (controller, url) {
+                setState(() {
+                  this.url = url.toString();
+                  urlController.text = this.url;
+                });
+              },
+              onPermissionRequest: (controller, request) async {
+                return PermissionResponse(
+                    resources: request.resources,
+                    action: PermissionResponseAction.GRANT);
+              },
+              shouldOverrideUrlLoading:
+                  (controller, navigationAction) async {
+                return NavigationActionPolicy.ALLOW;
+              },
+              onLoadStop: (controller, url) async {
+                pullToRefreshController?.endRefreshing();
+                setState(() {
+                  this.url = url.toString();
+                  urlController.text = this.url;
+                });
+              },
+              onReceivedError: (controller, request, error) {
+                pullToRefreshController?.endRefreshing();
+              },
+              onProgressChanged: (controller, progress) {
+                if (progress == 100) {
+                  pullToRefreshController?.endRefreshing();
+                }
+                setState(() {
+                  this.progress = progress / 100;
+                  urlController.text = url;
+                });
+              },
+              onUpdateVisitedHistory: (controller, url, androidIsReload) {
+                setState(() {
+                  this.url = url.toString();
+                  urlController.text = this.url;
+                });
+              },
+              onConsoleMessage: (controller, consoleMessage) {
+              },
+            ),
+          ),
+          progress < 1.0
+              ? LinearProgressIndicator(value: progress)
+              : Container(),
+        ],
+      ),
     );
   }
 }

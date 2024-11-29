@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sentuhtaru/plugin.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class Webgis extends StatelessWidget {
+class Webgis extends StatefulWidget {
   const Webgis({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MyHomePage();
-  }
+  State<Webgis> createState() => _Webgis();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _Webgis extends State<Webgis> {
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
@@ -41,6 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+    loadData();
+
     pullToRefreshController = PullToRefreshController(
       settings: PullToRefreshSettings(
         color: Colors.blue,
@@ -49,13 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
         webViewController?.reload();
       },
     );
-
-    loadData();
   }
 
   void loadData() async {
-    setState(() {
-    });
   }
 
   @override
@@ -70,125 +58,67 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: false,
-      builder: (_ , child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            fontFamily: 'FontPoppins',
+    return halaman(
+      context,
+      Stack(
+        children: <Widget>[
+          InAppWebView(
+            key: webViewKey,
+            initialUrlRequest:
+            URLRequest(url: WebUri('https://simtaru.kaltimprov.go.id/webgis')),
+            initialSettings: settings,
+            pullToRefreshController: pullToRefreshController,
+            onWebViewCreated: (controller) {
+              webViewController = controller;
+            },
+            onLoadStart: (controller, url) {
+              setState(() {
+                this.url = url.toString();
+                urlController.text = this.url;
+              });
+            },
+            onPermissionRequest: (controller, request) async {
+              return PermissionResponse(
+                  resources: request.resources,
+                  action: PermissionResponseAction.GRANT);
+            },
+            shouldOverrideUrlLoading:
+                (controller, navigationAction) async {
+              return NavigationActionPolicy.ALLOW;
+            },
+            onLoadStop: (controller, url) async {
+              pullToRefreshController?.endRefreshing();
+              setState(() {
+                this.url = url.toString();
+                urlController.text = this.url;
+              });
+            },
+            onReceivedError: (controller, request, error) {
+              pullToRefreshController?.endRefreshing();
+            },
+            onProgressChanged: (controller, progress) {
+              if (progress == 100) {
+                pullToRefreshController?.endRefreshing();
+              }
+              setState(() {
+                this.progress = progress / 100;
+                urlController.text = url;
+              });
+            },
+            onUpdateVisitedHistory: (controller, url, androidIsReload) {
+              setState(() {
+                this.url = url.toString();
+                urlController.text = this.url;
+              });
+            },
+            onConsoleMessage: (controller, consoleMessage) {
+            },
           ),
-          home: SafeArea(
-            child: Scaffold(
-              backgroundColor: const Color(0xFF053400),
-              appBar: AppBar(
-                title: const Text(
-                  'SENTUH TARU',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textScaler: TextScaler.linear(1.0),
-                ),
-                actions: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 16.0),
-                    child: Image(
-                      image: AssetImage('assets/images/kaltim.png'),
-                      width: 32,
-                    ),
-                  ),
-                ],
-                backgroundColor: const Color(0xFF053400),
-                leading: Builder(
-                  builder: (context) {
-                    return IconButton(
-                      icon: const Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    );
-                  },
-                ),
-                shape: const Border(
-                    bottom: BorderSide(
-                        color: Colors.white30,
-                        width: 1
-                    )
-                ),
-                elevation: 4,
-              ),
-              body: Stack(
-                children: <Widget>[
-                  InAppWebView(
-                    key: webViewKey,
-                    initialUrlRequest:
-                    URLRequest(url: WebUri('https://simtaru.kaltimprov.go.id/webgis')),
-                    initialSettings: settings,
-                    pullToRefreshController: pullToRefreshController,
-                    onWebViewCreated: (controller) {
-                      webViewController = controller;
-                    },
-                    onLoadStart: (controller, url) {
-                      setState(() {
-                        this.url = url.toString();
-                        urlController.text = this.url;
-                      });
-                    },
-                    onPermissionRequest: (controller, request) async {
-                      return PermissionResponse(
-                          resources: request.resources,
-                          action: PermissionResponseAction.GRANT);
-                    },
-                    shouldOverrideUrlLoading:
-                        (controller, navigationAction) async {
-                      return NavigationActionPolicy.ALLOW;
-                    },
-                    onLoadStop: (controller, url) async {
-                      pullToRefreshController?.endRefreshing();
-                      setState(() {
-                        this.url = url.toString();
-                        urlController.text = this.url;
-                      });
-                    },
-                    onReceivedError: (controller, request, error) {
-                      pullToRefreshController?.endRefreshing();
-                    },
-                    onProgressChanged: (controller, progress) {
-                      if (progress == 100) {
-                        pullToRefreshController?.endRefreshing();
-                      }
-                      setState(() {
-                        this.progress = progress / 100;
-                        urlController.text = url;
-                      });
-                    },
-                    onUpdateVisitedHistory: (controller, url, androidIsReload) {
-                      setState(() {
-                        this.url = url.toString();
-                        urlController.text = this.url;
-                      });
-                    },
-                    onConsoleMessage: (controller, consoleMessage) {
-                    },
-                  ),
-                  progress < 1.0
-                      ? LinearProgressIndicator(value: progress)
-                      : Container(),
-                ],
-              ),
-              bottomNavigationBar: const Buildbottommenu(),
-              drawer: BuildDrawer(ctx: context),
-            ),
-          ),
-        );
-      },
+          progress < 1.0
+              ? LinearProgressIndicator(value: progress)
+              : Container(),
+        ],
+      ),
     );
   }
 }

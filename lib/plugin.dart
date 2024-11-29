@@ -1,80 +1,141 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:sentuhtaru/pages/aplikasi.dart';
-import 'package:sentuhtaru/pages/homepage.dart';
-import 'package:sentuhtaru/pages/kontak.dart';
-import 'package:sentuhtaru/pages/profil.dart';
-import 'package:sentuhtaru/pages/pejabat.dart';
-import 'package:sentuhtaru/pages/semuaagenda.dart';
-import 'package:sentuhtaru/pages/semuaberita.dart';
-import 'package:sentuhtaru/pages/playlist.dart';
-import 'package:sentuhtaru/pages/galeri.dart';
-import 'package:sentuhtaru/pages/layanan.dart';
-import 'package:sentuhtaru/pages/webgis.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:sentuhtaru/pages/infotaru.dart';
+import 'package:sentuhtaru/pages/webgis.dart';
+import 'package:sentuhtaru/pages/homepage.dart';
+import 'package:sentuhtaru/pages/layanan.dart';
 
-class Buildbottommenu extends StatelessWidget {
-  const Buildbottommenu({super.key});
+Widget halaman(ctz, Widget halamannya) {
+  return ScreenUtilInit(
+    designSize: const Size(360, 690),
+    minTextAdapt: true,
+    splitScreenMode: true,
+    builder: (_, child) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+        ),
+        home: SafeArea(child: Scaffold(
+          backgroundColor: const Color(0xFF053400),
+          appBar: AppBar(
+            title: const Text(
+              'SENTUH TARU',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              textScaler: TextScaler.linear(1.0),
+            ),
+            actions: const [
+              Padding(
+                padding: EdgeInsets.only(right: 16.0),
+                child: Image(
+                  image: AssetImage('assets/images/kaltim.png'),
+                  width: 32,
+                ),
+              ),
+            ],
+            backgroundColor: const Color(0xFF053400),
+            leading: Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                );
+              },
+            ),
+            shape: const Border(
+                bottom: BorderSide(color: Colors.white30, width: 1)),
+            elevation: 4,
+          ),
+          bottomNavigationBar: navigasiBawah(ctz),
+          drawer: BuildDrawer(ctx: ctz),
+          body: halamannya,
+        ),
+        ),
+      );
+    },
+  );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return ConvexAppBar(
-      style: TabStyle.fixedCircle,
-      initialActiveIndex: 2,
-      backgroundColor: Colors.white,
-      items: const [
-        TabItem(icon: Icons.info, title: 'Info Taru'),
-        TabItem(icon: Icons.map, title: 'Webgis'),
-        TabItem(icon: Icons.home, title: 'Home'),
-        TabItem(icon: Icons.dashboard, title: 'Layanan'),
-        TabItem(icon: Icons.person, title: 'Profil'),
-      ],
-      color: const Color(0xFF053400),
-      activeColor: const Color(0xFF053400),
-      onTap: (index) {
-        if(index==0){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const Infotaru(),
-            ),
-          );
-        }
-        if(index==1){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const Webgis(),
-            ),
-          );
-        }
-        if(index==2){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const Homepage(),
-            ),
-          );
-        }
-        if(index==3){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const Layanan(),
-            ),
-          );
-        }
-        if(index==4){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const Profil(),
-            ),
-          );
-        }
-      },
-    );
-  }
+navigasiBawah(BuildContext context) {
+  return StylishBottomBar(
+    option: AnimatedBarOptions(),
+    items: [
+      BottomBarItem(
+        icon: const Icon(
+          Icons.info,
+        ),
+        title: const Text('Info Taru'),
+        selectedColor: const Color(0xFF053400),
+        unSelectedColor: const Color(0xFF053400),
+      ),
+      BottomBarItem(
+        icon: const Icon(
+          Icons.map,
+        ),
+        title: const Text('Webgis'),
+        selectedColor: const Color(0xFF053400),
+        unSelectedColor: const Color(0xFF053400),
+      ),
+      BottomBarItem(
+        icon: const Icon(
+          Icons.home,
+        ),
+        title: const Text('Home'),
+        selectedColor: const Color(0xFF053400),
+        unSelectedColor: const Color(0xFF053400),
+      ),
+      BottomBarItem(
+        icon: const Icon(
+          Icons.dashboard,
+        ),
+        title: const Text('Layanan'),
+        selectedColor: const Color(0xFF053400),
+        unSelectedColor: const Color(0xFF053400),
+      ),
+      BottomBarItem(
+        icon: const Icon(
+          Icons.person,
+        ),
+        title: const Text('Profil'),
+        selectedColor: const Color(0xFF053400),
+        unSelectedColor: const Color(0xFF053400),
+      ),
+    ],
+    onTap: (index) {
+      if(index==0){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Infotaru()),
+        );
+      }
+      if(index==1){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Webgis()),
+        );
+      }
+      if(index==2){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Homepage()),
+        );
+      }
+      if(index==3){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Homepage()),
+        );
+      }
+    },
+  );
 }
 
 class BuildDrawer extends StatelessWidget {
@@ -111,12 +172,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const Homepage(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -130,12 +185,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const Profil(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -149,12 +198,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const Pejabat(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -168,12 +211,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const Aplikasi(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -187,12 +224,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const SemuaAgenda(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -206,12 +237,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const SemuaBerita(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -225,12 +250,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const Playlist(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -244,12 +263,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const Galeri(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -263,12 +276,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const Layanan(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -282,12 +289,6 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const Kontak(),
-                ),
-              );
             },
           ),
           const Divider(height: 1, thickness: 1),
