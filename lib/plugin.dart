@@ -5,6 +5,9 @@ import 'package:sentuhtaru/pages/infotaru.dart';
 import 'package:sentuhtaru/pages/webgis.dart';
 import 'package:sentuhtaru/pages/homepage.dart';
 import 'package:sentuhtaru/pages/layanan.dart';
+import 'package:sentuhtaru/pages/profil.dart';
+import 'package:sentuhtaru/pages/pegawai.dart';
+import 'package:sentuhtaru/pages/kontak.dart';
 
 Widget halaman(ctz, Widget halamannya) {
   return ScreenUtilInit(
@@ -137,7 +140,7 @@ navigasiBawah(BuildContext context) {
       if(index==4){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Layanan()),
+          MaterialPageRoute(builder: (context) => const Profil()),
         );
       }
     },
@@ -178,6 +181,10 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Homepage()),
+              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -191,6 +198,10 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Profil()),
+              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -204,6 +215,10 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Pegawai()),
+              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -282,6 +297,10 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Layanan()),
+              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -295,6 +314,10 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Kontak()),
+              );
             },
           ),
           const Divider(height: 1, thickness: 1),
