@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sentuhtaru/plugin.dart';
 import 'package:sentuhtaru/pages/profil.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class DetailProfil extends StatefulWidget {
   final int myId;
@@ -14,40 +16,26 @@ class DetailProfil extends StatefulWidget {
 }
 
 class _DetailProfil extends State<DetailProfil> {
-  final GlobalKey webViewKey = GlobalKey();
-  InAppWebViewController? webViewController;
-  InAppWebViewSettings settings = InAppWebViewSettings(
-      javaScriptEnabled: true,
-      javaScriptCanOpenWindowsAutomatically: true,
-      cacheEnabled: true,
-      isInspectable: false,
-      mediaPlaybackRequiresUserGesture: false,
-      allowsInlineMediaPlayback: true,
-      iframeAllow: "camera; microphone",
-      iframeAllowFullscreen: true);
-
-  PullToRefreshController? pullToRefreshController;
-  String url = "";
-  double progress = 0;
-  final urlController = TextEditingController();
+  String zjudul = '';
+  String zgambar = '';
+  String zisi = '';
 
   @override
   void initState() {
     super.initState();
 
     loadData();
-
-    pullToRefreshController = PullToRefreshController(
-      settings: PullToRefreshSettings(
-        color: Colors.blue,
-      ),
-      onRefresh: () async {
-        webViewController?.reload();
-      },
-    );
   }
 
   void loadData() async {
+    String tmp = await http.read(Uri.parse('https://simtaru.kaltimprov.go.id/api/pages/${widget.myUrl.toString()}'));
+    Map<String, dynamic> tmpData = jsonDecode(tmp);
+
+    setState(() {
+      zjudul = tmpData['title'] ?? '';
+      zgambar = tmpData['image'] ?? '';
+      zisi = tmpData['body'] ?? '';
+    });
   }
 
   @override
@@ -64,8 +52,11 @@ class _DetailProfil extends State<DetailProfil> {
   Widget build(BuildContext context) {
     return halaman(
       context,
-        Stack(
-          children: <Widget>[
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
             TextButton(
               style: TextButton.styleFrom(
                 minimumSize: const Size.fromHeight(30),
@@ -91,65 +82,62 @@ class _DetailProfil extends State<DetailProfil> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-              child: InAppWebView(
-                key: webViewKey,
-                initialUrlRequest:
-                URLRequest(url: WebUri(widget.myUrl.toString())),
-                initialSettings: settings,
-                pullToRefreshController: pullToRefreshController,
-                onWebViewCreated: (controller) {
-                  webViewController = controller;
-                },
-                onLoadStart: (controller, url) {
-                  setState(() {
-                    this.url = url.toString();
-                    urlController.text = this.url;
-                  });
-                },
-                onPermissionRequest: (controller, request) async {
-                  return PermissionResponse(
-                      resources: request.resources,
-                      action: PermissionResponseAction.GRANT);
-                },
-                shouldOverrideUrlLoading:
-                    (controller, navigationAction) async {
-                  return NavigationActionPolicy.ALLOW;
-                },
-                onLoadStop: (controller, url) async {
-                  pullToRefreshController?.endRefreshing();
-                  setState(() {
-                    this.url = url.toString();
-                    urlController.text = this.url;
-                  });
-                },
-                onReceivedError: (controller, request, error) {
-                  pullToRefreshController?.endRefreshing();
-                },
-                onProgressChanged: (controller, progress) {
-                  if (progress == 100) {
-                    pullToRefreshController?.endRefreshing();
-                  }
-                  setState(() {
-                    this.progress = progress / 100;
-                    urlController.text = url;
-                  });
-                },
-                onUpdateVisitedHistory: (controller, url, androidIsReload) {
-                  setState(() {
-                    this.url = url.toString();
-                    urlController.text = this.url;
-                  });
-                },
-                onConsoleMessage: (controller, consoleMessage) {
-                },
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  if (zgambar != '')
+                    Center(
+                      child: Container(
+                        height: (MediaQuery.of(context).size.width - 32) / 4,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withAlpha(255),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(3),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: zgambar != ''
+                              ? Image.network(
+                            'https://simtaru.kaltimprov.go.id/storage/$zgambar',
+                            fit: BoxFit.fill,
+                          )
+                              : const Text(''),
+                        ),
+                      ),
+                    ),
+                  if (zgambar != '')
+                    Container(
+                      height: 16,
+                    ),
+                  Text(
+                    zjudul,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.yellow.shade400,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    height: 8,
+                  ),
+                  HtmlWidget(
+                    zisi,
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
               ),
             ),
-            progress < 1.0
-                ? LinearProgressIndicator(value: progress)
-                : Container(),
+            Container(
+              height: 32,
+            ),
           ],
         ),
+      ),
     );
   }
 }

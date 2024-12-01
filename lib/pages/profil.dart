@@ -14,7 +14,7 @@ class Profil extends StatefulWidget {
 class _Profil extends State<Profil> {
   List<int> listIdApps = <int>[];
   List<String> listJudulApps = <String>[];
-  List<String> listApps = <String>[];
+  List<int> listApps = <int>[];
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _Profil extends State<Profil> {
       for (var element in tmpDataapp) {
         listIdApps.add(element['id']??'');
         listJudulApps.add(element['judul']??'');
-        listApps.add(element['link']??'');
+        listApps.add(element['page_id']??'');
       }
     });
   }

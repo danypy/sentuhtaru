@@ -8,6 +8,7 @@ import 'package:sentuhtaru/pages/layanan.dart';
 import 'package:sentuhtaru/pages/profil.dart';
 import 'package:sentuhtaru/pages/pegawai.dart';
 import 'package:sentuhtaru/pages/kontak.dart';
+import 'package:sentuhtaru/pages/berita.dart';
 
 Widget halaman(ctz, Widget halamannya) {
   return ScreenUtilInit(
@@ -258,6 +259,10 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Berita()),
+              );
             },
           ),
           const Divider(height: 1, thickness: 1),
