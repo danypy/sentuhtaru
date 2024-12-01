@@ -20,7 +20,6 @@ class _Agenda extends State<Agenda> {
   final ScrollController _scrollController = ScrollController();
 
   Future loadData(uriy) async {
-    print(uriy);
     try {
       if(lastPage==false){
         final response = await http.get(Uri.parse(uriy));
@@ -38,14 +37,11 @@ class _Agenda extends State<Agenda> {
               _data.addAll(data['data']);
             }
             jmlData = _data.length;
-            print('=====================================');
-            print(jmlData);
           });
         }
       }
     } catch (e) {
-      print('=====================================');
-      print(e);
+      // print(e);
     }
   }
 

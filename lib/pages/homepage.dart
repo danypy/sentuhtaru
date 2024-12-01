@@ -3,6 +3,10 @@ import 'package:sentuhtaru/plugin.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:sentuhtaru/pages/detailaplikasi.dart';
+import 'package:sentuhtaru/pages/detailagenda.dart';
+import 'package:sentuhtaru/pages/detailberita.dart';
+import 'package:sentuhtaru/pages/aplikasi.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -266,6 +270,10 @@ class _Homepage extends State<Homepage> {
                   const Spacer(),
                   TextButton(
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Aplikasi()),
+                      );
                     },
                     child: const Text(
                       'Lihat Semua',
@@ -288,6 +296,10 @@ class _Homepage extends State<Homepage> {
                         padding: const EdgeInsets.all(4),
                         child: GestureDetector(
                           onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => DetailAplikasi(myId: listIdApps[index])),
+                            );
                           },
                           child: Container(
                             width: (MediaQuery.of(context).size.width -
@@ -351,6 +363,10 @@ class _Homepage extends State<Homepage> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DetailAgenda(myId: listIdAgenda[index])),
+                        );
                       },
                       child: Stack(
                         children: [
@@ -464,6 +480,10 @@ class _Homepage extends State<Homepage> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DetailBerita(myId: listIdBerita[index])),
+                        );
                       },
                       child: Stack(
                         children: [

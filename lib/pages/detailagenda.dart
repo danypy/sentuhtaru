@@ -79,7 +79,7 @@ class _DetailAgenda extends State<DetailAgenda> {
                 );
               },
               child: const Text(
-                '< Berita',
+                '< Agenda',
                 style: TextStyle(
                   fontSize: 12,
                   color: Color(0xFF053400),
@@ -111,9 +111,10 @@ class _DetailAgenda extends State<DetailAgenda> {
                             : const Text(''),
                       ),
                     ),
-                  Container(
-                    height: 16,
-                  ),
+                  if (xdata != '')
+                    Container(
+                      height: 16,
+                    ),
                   Text(
                     xjudul,
                     style: TextStyle(
@@ -156,7 +157,7 @@ class _DetailAgenda extends State<DetailAgenda> {
                             ),
                           ),
                           Text(
-                            tglIndo(xwaktus),
+                            tglIndo(xwaktus==''?xwaktum:xwaktus),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 12,
@@ -190,10 +191,21 @@ class _DetailAgenda extends State<DetailAgenda> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
+
+  String tglIndo(String str) {
+    try{
+        var tmp = str.substring(0,10).split("-");
+        List<String> bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        return '${tmp[2]} ${bulan[int.parse(tmp[1])]} ${tmp[0]}';
+    }catch(e){
+    }
+    return '';
+  }
+
 }
