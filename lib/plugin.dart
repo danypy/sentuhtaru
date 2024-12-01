@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sentuhtaru/pages/galeri.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:sentuhtaru/pages/infotaru.dart';
 import 'package:sentuhtaru/pages/webgis.dart';
@@ -11,6 +12,7 @@ import 'package:sentuhtaru/pages/kontak.dart';
 import 'package:sentuhtaru/pages/berita.dart';
 import 'package:sentuhtaru/pages/agenda.dart';
 import 'package:sentuhtaru/pages/aplikasi.dart';
+import 'package:sentuhtaru/pages/arsipvideo.dart';
 
 Widget halaman(ctz, Widget halamannya) {
   return ScreenUtilInit(
@@ -279,13 +281,17 @@ class BuildDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.videocam_outlined),
             title: const Text(
-              'Video',
+              'Arsip Video',
               style: TextStyle(
                 fontSize: 12,
               ),
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ArsipVideo()),
+              );
             },
           ),
           const Divider(height: 1, thickness: 1),
@@ -299,6 +305,10 @@ class BuildDrawer extends StatelessWidget {
               textScaler: TextScaler.linear(1.0),
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Galeri()),
+              );
             },
           ),
           const Divider(height: 1, thickness: 1),

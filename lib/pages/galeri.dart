@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:sentuhtaru/plugin.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:sentuhtaru/pages/detailagenda.dart';
+import 'package:sentuhtaru/pages/detailgaleri.dart';
 
-class Agenda extends StatefulWidget {
-  const Agenda({super.key});
+class Galeri extends StatefulWidget {
+  const Galeri({super.key});
 
   @override
-  State<Agenda> createState() => _Agenda();
+  State<Galeri> createState() => _Galeri();
 }
 
-class _Agenda extends State<Agenda> {
-  String urix = 'https://simtaru.kaltimprov.go.id/api/agenda/20?page=1';
+class _Galeri extends State<Galeri> {
+  String urix = 'https://simtaru.kaltimprov.go.id/api/galeri/5?page=1';
   String nextPage = '';
   bool lastPage = false;
   int jmlData = 0;
@@ -30,7 +30,7 @@ class _Agenda extends State<Agenda> {
             if(data['next_page_url'] == null){
               lastPage = true;
             }
-            nextPage = data['next_page_url'].toString();
+            nextPage = data['next_page_url'];
             if(jmlData==0){
               _data = data['data'];
             }else{
@@ -41,7 +41,7 @@ class _Agenda extends State<Agenda> {
         }
       }
     } catch (e) {
-      // print(e);
+      //print(e);
     }
   }
 
@@ -80,7 +80,7 @@ class _Agenda extends State<Agenda> {
           const Padding(
             padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
             child: Text(
-              'Agenda',
+              'Galeri Photo',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -100,7 +100,11 @@ class _Agenda extends State<Agenda> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DetailAgenda(myId: _data[index]['id'],)),
+                        MaterialPageRoute(builder: (context) => DetailGaleri(
+                          myId: _data[index]['id'],
+                          myTitle: _data[index]['judul'].toString(),
+                          myTgl: tglIndo(_data[index]['created_at'].toString()),
+                        )),
                       );
                     },
                     child: ClipRRect(
@@ -133,7 +137,7 @@ class _Agenda extends State<Agenda> {
                               ),
                               child: Center(
                                 child: Text(
-                                  _data[index]['tema'].toString(),
+                                  _data[index]['judul'].toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 12,
@@ -161,7 +165,7 @@ class _Agenda extends State<Agenda> {
                                         Icons.calendar_month
                                     ),
                                     Text(
-                                      tglIndo(_data[index]['tglm'].toString()),
+                                      tglIndo(_data[index]['created_at'].toString()),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 12,

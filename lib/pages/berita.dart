@@ -187,8 +187,12 @@ class _Berita extends State<Berita> {
   }
 
   String tglIndo(String str) {
-    var tmp = str.split("-");
-    List<String> bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-    return '${tmp[2]} ${bulan[int.parse(tmp[1])]} ${tmp[0]}';
+    try{
+      var tmp = str.substring(0,10).split("-");
+      List<String> bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      return '${tmp[2]} ${bulan[int.parse(tmp[1])]} ${tmp[0]}';
+    }catch(e){
+    }
+    return '';
   }
 }
