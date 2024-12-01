@@ -44,7 +44,7 @@ class _Homepage extends State<Homepage> {
     initialVideoId: '7dT7fkDMbdQ',
     flags: const YoutubePlayerFlags(
       showLiveFullscreenButton: false,
-      autoPlay: true,
+      autoPlay: false,
       mute: false,
       loop: true,
     ),
@@ -109,11 +109,13 @@ class _Homepage extends State<Homepage> {
   @override
   void deactivate() {
     videoControl.pause();
+    videoControl.dispose();
     super.deactivate();
   }
 
   @override
   void dispose() {
+    videoControl.pause();
     videoControl.dispose();
     super.dispose();
   }
