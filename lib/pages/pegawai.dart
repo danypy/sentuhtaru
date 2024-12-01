@@ -109,17 +109,17 @@ class _Pegawai extends State<Pegawai> {
                           child: Column(
                             children: [
                               Container(
-                                width: 170,
-                                height: 220,
+                                width: (MediaQuery.of(context).size.width / 2)-40,
+                                height: ((MediaQuery.of(context).size.width / 2)-40) * 1.4,
                                 color: Colors.white,
                                 child: Image.network(
                                   kabidGambar.toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${kabidGambar.toString()}',
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                               Container(
                                 color: Colors.white,
-                                width: 170,
+                                width: (MediaQuery.of(context).size.width / 2)-40,
                                 child: Center(
                                   child: Text(
                                     kabidNama.toString(),
@@ -134,7 +134,7 @@ class _Pegawai extends State<Pegawai> {
                               ),
                               Container(
                                 color: Colors.white,
-                                width: 170,
+                                width: (MediaQuery.of(context).size.width / 2)-40,
                                 child: Center(
                                   child: Text(
                                     kabidNip.toString(),
@@ -174,17 +174,17 @@ class _Pegawai extends State<Pegawai> {
                               child: Column(
                                 children: [
                                   Container(
-                                    width: 170,
-                                    height: 220,
+                                    width: (MediaQuery.of(context).size.width / 2)-40,
+                                    height: ((MediaQuery.of(context).size.width / 2)-40) * 1.4,
                                     color: Colors.white,
                                     child: Image.network(
                                       kasiGambar[index].toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${kasiGambar[index].toString()}',
-                                      fit: BoxFit.fill,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   Container(
                                     color: Colors.white,
-                                    width: 170,
+                                    width: (MediaQuery.of(context).size.width / 2)-40,
                                     height: 50,
                                     child: Center(
                                       child: Text(
@@ -243,17 +243,17 @@ class _Pegawai extends State<Pegawai> {
                               child: Column(
                                 children: [
                                   Container(
-                                    width: 170,
-                                    height: 220,
+                                    width: (MediaQuery.of(context).size.width / 2)-40,
+                                    height: ((MediaQuery.of(context).size.width / 2)-40) * 1.4,
                                     color: Colors.white,
                                     child: Image.network(
                                       stafGambar[index].toString()==''?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${stafGambar[index].toString()}',
-                                      fit: BoxFit.fill,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   Container(
                                     color: Colors.white,
-                                    width: 170,
+                                    width: (MediaQuery.of(context).size.width / 2)-40,
                                     height: 50,
                                     child: Center(
                                       child: Text(

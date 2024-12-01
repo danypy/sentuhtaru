@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:sentuhtaru/plugin.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:sentuhtaru/pages/detailberita.dart';
+import 'package:sentuhtaru/pages/detailagenda.dart';
 
-class Berita extends StatefulWidget {
-  const Berita({super.key});
+class Agenda extends StatefulWidget {
+  const Agenda({super.key});
 
   @override
-  State<Berita> createState() => _Berita();
+  State<Agenda> createState() => _Agenda();
 }
 
-class _Berita extends State<Berita> {
-  String urix = 'https://simtaru.kaltimprov.go.id/api/berita/5?page=1';
+class _Agenda extends State<Agenda> {
+  String urix = 'https://simtaru.kaltimprov.go.id/api/agenda/20?page=1';
   String nextPage = '';
   bool lastPage = false;
   int jmlData = 0;
@@ -20,6 +20,7 @@ class _Berita extends State<Berita> {
   final ScrollController _scrollController = ScrollController();
 
   Future loadData(uriy) async {
+    print(uriy);
     try {
       if(lastPage==false){
         final response = await http.get(Uri.parse(uriy));
@@ -30,18 +31,21 @@ class _Berita extends State<Berita> {
             if(data['next_page_url'] == null){
               lastPage = true;
             }
-            nextPage = data['next_page_url'];
+            nextPage = data['next_page_url'].toString();
             if(jmlData==0){
               _data = data['data'];
             }else{
               _data.addAll(data['data']);
             }
             jmlData = _data.length;
+            print('=====================================');
+            print(jmlData);
           });
         }
       }
     } catch (e) {
-      //print(e);
+      print('=====================================');
+      print(e);
     }
   }
 
@@ -80,7 +84,7 @@ class _Berita extends State<Berita> {
           const Padding(
             padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
             child: Text(
-              'Berita',
+              'Agenda',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -100,7 +104,7 @@ class _Berita extends State<Berita> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DetailBerita(myId: _data[index]['id'],)),
+                        MaterialPageRoute(builder: (context) => DetailAgenda(myId: _data[index]['id'],)),
                       );
                     },
                     child: ClipRRect(
@@ -120,7 +124,7 @@ class _Berita extends State<Berita> {
                               child: Padding(
                                 padding: const EdgeInsets.all(4),
                                 child: Image.network(
-                                  _data[index]['image'].toString()=='null'?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${_data[index]['image'].toString()}',
+                                  _data[index]['gambar'].toString()=='null'?'https://sukaphp.com/assets/noimage.png':'https://simtaru.kaltimprov.go.id/storage/${_data[index]['gambar'].toString()}',
                                   fit: BoxFit.contain,
                                 ),
                               ),
@@ -133,7 +137,7 @@ class _Berita extends State<Berita> {
                               ),
                               child: Center(
                                 child: Text(
-                                  _data[index]['title'].toString(),
+                                  _data[index]['tema'].toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 12,
@@ -161,7 +165,7 @@ class _Berita extends State<Berita> {
                                         Icons.calendar_month
                                     ),
                                     Text(
-                                      tglIndo(_data[index]['tgl'].toString()),
+                                      tglIndo(_data[index]['tglm'].toString()),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 12,
